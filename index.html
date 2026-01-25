@@ -44,15 +44,27 @@
             opacity: 0.9;
         }
         
-        .controls {
+        .main-controls {
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
             margin-bottom: 30px;
+            gap: 15px;
+        }
+        
+        .topic-controls {
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
         }
         
-        .topic-filter {
+        .action-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
             padding: 10px 20px;
             background: white;
             border: none;
@@ -61,16 +73,72 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .topic-filter:hover {
+        .control-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .control-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .topic-filter {
+            background: white;
+            color: #333;
         }
         
         .topic-filter.active {
             background: #4CAF50;
             color: white;
+        }
+        
+        .flip-all-definitions {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .flip-all-terms {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .quiz-mode {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+        }
+        
+        .quiz-mode.active {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            border: 3px solid #ff6b6b;
+        }
+        
+        .view-controls {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            color: #333;
+        }
+        
+        .mode-indicator {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .flashcard-grid {
@@ -84,6 +152,7 @@
             height: 200px;
             perspective: 1000px;
             cursor: pointer;
+            position: relative;
         }
         
         .flashcard-inner {
@@ -159,6 +228,146 @@
             color: #666;
         }
         
+        .card-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .card-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .master-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .master-btn.mastered {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .flag-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .flag-btn.flagged {
+            background: #ff4757;
+            color: white;
+        }
+        
+        .mastered-badge, .flagged-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            z-index: 10;
+        }
+        
+        .mastered-badge {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .flagged-badge {
+            background: #ff4757;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .quiz-question {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .quiz-option:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .quiz-stats {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .quiz-next {
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
         .stats {
             background: white;
             padding: 20px;
@@ -168,10 +377,48 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+        }
+        
         .counter {
             font-size: 1.2rem;
             font-weight: bold;
             color: #667eea;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
         }
         
         @media (max-width: 768px) {
@@ -183,13 +430,22 @@
                 font-size: 2rem;
             }
             
-            .controls {
+            .main-controls {
                 flex-direction: column;
-                align-items: center;
             }
             
-            .topic-filter {
-                width: 80%;
+            .topic-controls, .action-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -201,23 +457,80 @@
         .topic-6 { background: #009688; } /* Respiration */
         .topic-glossary { background: #795548; } /* Glossary */
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>National 5 Biology Flashcards</h1>
-            <p class="subtitle">Cell Biology Unit - Click cards to flip | Filter by topic</p>
+            <h1>National 5 Biology Flashcards <span id="modeIndicator" class="mode-indicator" style="display: none;">Quiz Mode</span></h1>
+            <p class="subtitle" id="subtitle">Cell Biology Unit - Click cards to flip | Use buttons to filter or flip all</p>
         </header>
         
-        <div class="controls">
-            <button class="topic-filter active" data-topic="all">All Topics</button>
-            <button class="topic-filter" data-topic="1">Cell Structure</button>
-            <button class="topic-filter" data-topic="2">Transport</button>
-            <button class="topic-filter" data-topic="3">DNA & Proteins</button>
-            <button class="topic-filter" data-topic="4">Enzymes</button>
-            <button class="topic-filter" data-topic="5">Genetic Engineering</button>
-            <button class="topic-filter" data-topic="6">Respiration</button>
-            <button class="topic-filter" data-topic="glossary">Glossary</button>
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-question" id="quizQuestion">
+                <!-- Question will appear here -->
+            </div>
+            <div class="quiz-options" id="quizOptions">
+                <!-- Options will appear here -->
+            </div>
+            <div class="quiz-controls">
+                <div class="quiz-stats" id="quizStats">
+                    Question 1 of 10 | Score: 0/0
+                </div>
+                <button class="quiz-next" id="quizNext">Next Question</button>
+            </div>
+        </div>
+        
+        <div class="main-controls">
+            <div class="topic-controls">
+                <button class="control-btn topic-filter active" data-topic="all">
+                    <i class="fas fa-layer-group"></i> All Topics
+                </button>
+                <button class="control-btn topic-filter" data-topic="1">
+                    <i class="fas fa-cell"></i> Cell Structure
+                </button>
+                <button class="control-btn topic-filter" data-topic="2">
+                    <i class="fas fa-exchange-alt"></i> Transport
+                </button>
+                <button class="control-btn topic-filter" data-topic="3">
+                    <i class="fas fa-dna"></i> DNA
+                </button>
+                <button class="control-btn topic-filter" data-topic="4">
+                    <i class="fas fa-flask"></i> Enzymes
+                </button>
+                <button class="control-btn topic-filter" data-topic="5">
+                    <i class="fas fa-dna"></i> Genetic Eng.
+                </button>
+                <button class="control-btn topic-filter" data-topic="6">
+                    <i class="fas fa-fire"></i> Respiration
+                </button>
+                <button class="control-btn topic-filter" data-topic="glossary">
+                    <i class="fas fa-book"></i> Glossary
+                </button>
+            </div>
+            
+            <div class="action-controls">
+                <button class="control-btn flip-all-terms" id="flipAllTerms">
+                    <i class="fas fa-undo"></i> Flip All to Terms
+                </button>
+                <button class="control-btn flip-all-definitions" id="flipAllDefinitions">
+                    <i class="fas fa-sync-alt"></i> Flip All to Definitions
+                </button>
+                <button class="control-btn quiz-mode" id="quizModeToggle">
+                    <i class="fas fa-question-circle"></i> Quiz Mode
+                </button>
+                <button class="control-btn view-controls" id="toggleViewControls">
+                    <i class="fas fa-eye"></i> Show Only: <span id="viewFilterText">All</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="filter-options" id="viewControls" style="display: none;">
+            <button class="filter-btn" data-view="all">All Cards</button>
+            <button class="filter-btn" data-view="mastered">Mastered</button>
+            <button class="filter-btn" data-view="unmastered">Not Mastered</button>
+            <button class="filter-btn" data-view="flagged">Flagged</button>
+            <button class="filter-btn" data-view="unflagged">Not Flagged</button>
         </div>
         
         <div class="flashcard-grid" id="flashcardContainer">
@@ -227,7 +540,12 @@
         <div class="stats">
             <p>Total Flashcards: <span class="counter" id="totalCards">0</span> | 
             Currently Viewing: <span class="counter" id="visibleCards">0</span></p>
-            <p><em>Click any card to flip it. Use topic buttons above to filter.</em></p>
+            <p>Mastered: <span class="counter" id="masteredCount">0</span> | 
+            Flagged: <span class="counter" id="flaggedCount">0</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="masteryProgress" style="width: 0%"></div>
+            </div>
+            <p><em>Click any card to flip it. Use buttons above to filter or flip all cards at once.</em></p>
         </div>
     </div>
 
@@ -323,7 +641,38 @@
             "glossary": "#795548"
         };
 
+        // App state
         let currentFilter = "all";
+        let currentView = "all";
+        let isQuizMode = false;
+        let userData = {};
+        let quizState = {
+            currentQuestion: 0,
+            score: 0,
+            questions: [],
+            totalQuestions: 10
+        };
+
+        // Initialize user data from localStorage
+        function initUserData() {
+            const saved = localStorage.getItem('biologyFlashcardsData');
+            if (saved) {
+                userData = JSON.parse(saved);
+            } else {
+                flashcards.forEach((card, index) => {
+                    userData[card.term] = {
+                        mastered: false,
+                        flagged: false,
+                        lastReviewed: null
+                    };
+                });
+                saveUserData();
+            }
+        }
+
+        function saveUserData() {
+            localStorage.setItem('biologyFlashcardsData', JSON.stringify(userData));
+        }
 
         // Initialize flashcards
         function initFlashcards() {
@@ -331,24 +680,57 @@
             container.innerHTML = '';
             
             // Filter flashcards
-            const filtered = currentFilter === "all" 
-                ? flashcards 
-                : flashcards.filter(card => card.topic === currentFilter);
+            const filtered = flashcards.filter(card => {
+                // Topic filter
+                if (currentFilter !== "all" && card.topic !== currentFilter) return false;
+                
+                // View filter
+                const cardData = userData[card.term];
+                switch (currentView) {
+                    case 'mastered': return cardData.mastered;
+                    case 'unmastered': return !cardData.mastered;
+                    case 'flagged': return cardData.flagged;
+                    case 'unflagged': return !cardData.flagged;
+                    default: return true;
+                }
+            });
             
             // Create flashcards
             filtered.forEach((card, index) => {
+                const cardData = userData[card.term];
                 const flashcard = document.createElement('div');
                 flashcard.className = `flashcard`;
+                flashcard.dataset.term = card.term;
                 flashcard.dataset.topic = card.topic;
                 
                 flashcard.innerHTML = `
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
+                            <div class="card-actions">
+                                <button class="card-btn master-btn ${cardData.mastered ? 'mastered' : ''}" data-action="master">
+                                    <i class="fas ${cardData.mastered ? 'fa-star' : 'fa-star'}"></i>
+                                </button>
+                                <button class="card-btn flag-btn ${cardData.flagged ? 'flagged' : ''}" data-action="flag">
+                                    <i class="fas ${cardData.flagged ? 'fa-flag' : 'fa-flag'}"></i>
+                                </button>
+                            </div>
+                            ${cardData.mastered ? '<div class="mastered-badge"><i class="fas fa-check"></i></div>' : ''}
+                            ${cardData.flagged ? '<div class="flagged-badge"><i class="fas fa-flag"></i></div>' : ''}
                             <div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
                             <div class="term">${card.term}</div>
                             <div class="hint">Click to flip for definition</div>
                         </div>
                         <div class="flashcard-back">
+                            <div class="card-actions">
+                                <button class="card-btn master-btn ${cardData.mastered ? 'mastered' : ''}" data-action="master">
+                                    <i class="fas ${cardData.mastered ? 'fa-star' : 'fa-star'}"></i>
+                                </button>
+                                <button class="card-btn flag-btn ${cardData.flagged ? 'flagged' : ''}" data-action="flag">
+                                    <i class="fas ${cardData.flagged ? 'fa-flag' : 'fa-flag'}"></i>
+                                </button>
+                            </div>
+                            ${cardData.mastered ? '<div class="mastered-badge"><i class="fas fa-check"></i></div>' : ''}
+                            ${cardData.flagged ? '<div class="flagged-badge"><i class="fas fa-flag"></i></div>' : ''}
                             <div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
                             <div class="definition">${card.definition}</div>
                             <div class="hint">Click to flip back</div>
@@ -357,19 +739,247 @@
                 `;
                 
                 // Add click event to flip card
-                flashcard.addEventListener('click', () => {
-                    flashcard.classList.toggle('flipped');
+                flashcard.addEventListener('click', (e) => {
+                    if (!e.target.closest('.card-btn')) {
+                        flashcard.classList.toggle('flipped');
+                    }
+                });
+                
+                // Add action button events
+                const masterBtn = flashcard.querySelector('[data-action="master"]');
+                const flagBtn = flashcard.querySelector('[data-action="flag"]');
+                
+                masterBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleMastery(card.term, flashcard);
+                });
+                
+                flagBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleFlag(card.term, flashcard);
                 });
                 
                 container.appendChild(flashcard);
             });
             
-            // Update stats
-            document.getElementById('totalCards').textContent = flashcards.length;
-            document.getElementById('visibleCards').textContent = filtered.length;
+            updateStats();
         }
 
-        // Filter buttons
+        function toggleMastery(term, flashcard) {
+            userData[term].mastered = !userData[term].mastered;
+            userData[term].lastReviewed = new Date().toISOString();
+            
+            const masterBtn = flashcard.querySelector('[data-action="master"]');
+            const masteredBadge = flashcard.querySelector('.mastered-badge');
+            
+            if (userData[term].mastered) {
+                masterBtn.classList.add('mastered');
+                masterBtn.innerHTML = '<i class="fas fa-star"></i>';
+                if (!masteredBadge) {
+                    const badge = document.createElement('div');
+                    badge.className = 'mastered-badge';
+                    badge.innerHTML = '<i class="fas fa-check"></i>';
+                    flashcard.querySelector('.flashcard-front').appendChild(badge);
+                    flashcard.querySelector('.flashcard-back').appendChild(badge.cloneNode(true));
+                }
+            } else {
+                masterBtn.classList.remove('mastered');
+                masterBtn.innerHTML = '<i class="far fa-star"></i>';
+                if (masteredBadge) {
+                    masteredBadge.remove();
+                    flashcard.querySelector('.flashcard-back .mastered-badge')?.remove();
+                }
+            }
+            
+            saveUserData();
+            updateStats();
+        }
+
+        function toggleFlag(term, flashcard) {
+            userData[term].flagged = !userData[term].flagged;
+            
+            const flagBtn = flashcard.querySelector('[data-action="flag"]');
+            const flaggedBadge = flashcard.querySelector('.flagged-badge');
+            
+            if (userData[term].flagged) {
+                flagBtn.classList.add('flagged');
+                flagBtn.innerHTML = '<i class="fas fa-flag"></i>';
+                if (!flaggedBadge) {
+                    const badge = document.createElement('div');
+                    badge.className = 'flagged-badge';
+                    badge.innerHTML = '<i class="fas fa-flag"></i>';
+                    flashcard.querySelector('.flashcard-front').appendChild(badge);
+                    flashcard.querySelector('.flashcard-back').appendChild(badge.cloneNode(true));
+                }
+            } else {
+                flagBtn.classList.remove('flagged');
+                flagBtn.innerHTML = '<i class="far fa-flag"></i>';
+                if (flaggedBadge) {
+                    flaggedBadge.remove();
+                    flashcard.querySelector('.flashcard-back .flagged-badge')?.remove();
+                }
+            }
+            
+            saveUserData();
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = flashcards.length;
+            let mastered = 0;
+            let flagged = 0;
+            
+            flashcards.forEach(card => {
+                if (userData[card.term]?.mastered) mastered++;
+                if (userData[card.term]?.flagged) flagged++;
+            });
+            
+            const masteryPercent = (mastered / total) * 100;
+            
+            document.getElementById('totalCards').textContent = total;
+            document.getElementById('masteredCount').textContent = mastered;
+            document.getElementById('flaggedCount').textContent = flagged;
+            document.getElementById('masteryProgress').style.width = `${masteryPercent}%`;
+            
+            // Update visible cards count
+            const visible = document.querySelectorAll('.flashcard').length;
+            document.getElementById('visibleCards').textContent = visible;
+        }
+
+        // Quiz functions
+        function startQuiz() {
+            isQuizMode = true;
+            document.getElementById('modeIndicator').style.display = 'inline-block';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Quiz Mode - Test your knowledge!';
+            document.getElementById('quizModeToggle').classList.add('active');
+            document.getElementById('flashcardContainer').style.display = 'none';
+            document.querySelector('.filter-options').style.display = 'none';
+            
+            // Generate quiz questions
+            generateQuizQuestions();
+            showNextQuestion();
+        }
+
+        function stopQuiz() {
+            isQuizMode = false;
+            document.getElementById('modeIndicator').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('subtitle').textContent = 'Cell Biology Unit - Click cards to flip | Use buttons to filter or flip all';
+            document.getElementById('quizModeToggle').classList.remove('active');
+            document.getElementById('flashcardContainer').style.display = 'grid';
+            document.querySelector('.filter-options').style.display = currentView !== 'all' ? 'flex' : 'none';
+        }
+
+        function generateQuizQuestions() {
+            quizState.questions = [];
+            quizState.currentQuestion = 0;
+            quizState.score = 0;
+            
+            // Get cards based on current filter
+            let availableCards = flashcards;
+            if (currentFilter !== "all") {
+                availableCards = flashcards.filter(card => card.topic === currentFilter);
+            }
+            
+            // Shuffle and select questions
+            const shuffled = [...availableCards].sort(() => Math.random() - 0.5);
+            const selected = shuffled.slice(0, Math.min(10, shuffled.length));
+            
+            selected.forEach(card => {
+                // Get 3 other random definitions as wrong answers
+                const wrongAnswers = [];
+                const allCardsExceptCurrent = flashcards.filter(c => c.term !== card.term);
+                const shuffledWrong = [...allCardsExceptCurrent].sort(() => Math.random() - 0.5);
+                
+                for (let i = 0; i < 3 && i < shuffledWrong.length; i++) {
+                    wrongAnswers.push(shuffledWrong[i].definition);
+                }
+                
+                // Combine and shuffle answers
+                const answers = [card.definition, ...wrongAnswers].sort(() => Math.random() - 0.5);
+                
+                quizState.questions.push({
+                    term: card.term,
+                    correctAnswer: card.definition,
+                    answers: answers
+                });
+            });
+            
+            quizState.totalQuestions = quizState.questions.length;
+        }
+
+        function showNextQuestion() {
+            if (quizState.currentQuestion >= quizState.questions.length) {
+                endQuiz();
+                return;
+            }
+            
+            const question = quizState.questions[quizState.currentQuestion];
+            document.getElementById('quizQuestion').textContent = `What is the definition of "${question.term}"?`;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const option = document.createElement('div');
+                option.className = 'quiz-option';
+                option.textContent = answer;
+                option.dataset.index = index;
+                
+                option.addEventListener('click', () => selectAnswer(option, answer === question.correctAnswer));
+                optionsContainer.appendChild(option);
+            });
+            
+            document.getElementById('quizStats').textContent = 
+                `Question ${quizState.currentQuestion + 1} of ${quizState.totalQuestions} | Score: ${quizState.score}/${quizState.currentQuestion}`;
+            
+            document.getElementById('quizNext').style.display = 'none';
+        }
+
+        function selectAnswer(option, isCorrect) {
+            // Disable all options
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (isCorrect) {
+                option.classList.add('correct');
+                quizState.score++;
+            } else {
+                option.classList.add('incorrect');
+                // Highlight correct answer
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    if (opt.textContent === quizState.questions[quizState.currentQuestion].correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            document.getElementById('quizNext').style.display = 'block';
+        }
+
+        function endQuiz() {
+            const scorePercent = (quizState.score / quizState.totalQuestions) * 100;
+            document.getElementById('quizQuestion').innerHTML = `
+                <h2>Quiz Complete!</h2>
+                <p>Your score: <strong>${quizState.score}/${quizState.totalQuestions}</strong> (${scorePercent.toFixed(1)}%)</p>
+                <p>${scorePercent >= 80 ? 'Excellent work!' : scorePercent >= 60 ? 'Good job!' : 'Keep practicing!'}</p>
+            `;
+            
+            document.getElementById('quizOptions').innerHTML = '';
+            document.getElementById('quizNext').textContent = 'Restart Quiz';
+            document.getElementById('quizNext').onclick = () => {
+                generateQuizQuestions();
+                quizState.currentQuestion = 0;
+                quizState.score = 0;
+                showNextQuestion();
+            };
+            
+            document.getElementById('quizStats').textContent = `Final Score: ${quizState.score}/${quizState.totalQuestions}`;
+        }
+
+        // Event Listeners
         document.querySelectorAll('.topic-filter').forEach(button => {
             button.addEventListener('click', () => {
                 // Update active button
@@ -380,12 +990,68 @@
                 
                 // Update filter and refresh
                 currentFilter = button.dataset.topic;
+                if (isQuizMode) {
+                    startQuiz();
+                } else {
+                    initFlashcards();
+                }
+            });
+        });
+
+        document.getElementById('flipAllTerms').addEventListener('click', () => {
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.classList.remove('flipped');
+            });
+        });
+
+        document.getElementById('flipAllDefinitions').addEventListener('click', () => {
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.classList.add('flipped');
+            });
+        });
+
+        document.getElementById('quizModeToggle').addEventListener('click', () => {
+            if (isQuizMode) {
+                stopQuiz();
+            } else {
+                startQuiz();
+            }
+        });
+
+        document.getElementById('toggleViewControls').addEventListener('click', () => {
+            const viewControls = document.getElementById('viewControls');
+            const isVisible = viewControls.style.display === 'flex';
+            viewControls.style.display = isVisible ? 'none' : 'flex';
+        });
+
+        document.getElementById('quizNext').addEventListener('click', () => {
+            quizState.currentQuestion++;
+            showNextQuestion();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                currentView = button.dataset.view;
+                document.getElementById('viewFilterText').textContent = 
+                    currentView === 'all' ? 'All' :
+                    currentView === 'mastered' ? 'Mastered' :
+                    currentView === 'unmastered' ? 'Not Mastered' :
+                    currentView === 'flagged' ? 'Flagged' : 'Not Flagged';
+                
                 initFlashcards();
             });
         });
 
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', initFlashcards);
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            initUserData();
+            initFlashcards();
+        });
     </script>
 </body>
 </html>
