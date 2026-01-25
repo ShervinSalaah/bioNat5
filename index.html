@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N5 Biology Cell Biology Flashcards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .topic-filter {
+            padding: 10px 20px;
+            background: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .topic-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .topic-filter.active {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .flashcard {
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .flashcard-front {
+            background: white;
+            color: #333;
+            border-left: 8px solid #667eea;
+        }
+        
+        .flashcard-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+            border-left: 8px solid #f5576c;
+        }
+        
+        .term {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .definition {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .topic-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .hint {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            color: #666;
+        }
+        
+        .stats {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .flashcard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .topic-filter {
+                width: 80%;
+            }
+        }
+        
+        .topic-1 { background: #667eea; } /* Cell Structure */
+        .topic-2 { background: #4CAF50; } /* Transport */
+        .topic-3 { background: #FF9800; } /* DNA */
+        .topic-4 { background: #E91E63; } /* Proteins */
+        .topic-5 { background: #9C27B0; } /* Genetic Engineering */
+        .topic-6 { background: #009688; } /* Respiration */
+        .topic-glossary { background: #795548; } /* Glossary */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>National 5 Biology Flashcards</h1>
+            <p class="subtitle">Cell Biology Unit - Click cards to flip | Filter by topic</p>
+        </header>
+        
+        <div class="controls">
+            <button class="topic-filter active" data-topic="all">All Topics</button>
+            <button class="topic-filter" data-topic="1">Cell Structure</button>
+            <button class="topic-filter" data-topic="2">Transport</button>
+            <button class="topic-filter" data-topic="3">DNA & Proteins</button>
+            <button class="topic-filter" data-topic="4">Enzymes</button>
+            <button class="topic-filter" data-topic="5">Genetic Engineering</button>
+            <button class="topic-filter" data-topic="6">Respiration</button>
+            <button class="topic-filter" data-topic="glossary">Glossary</button>
+        </div>
+        
+        <div class="flashcard-grid" id="flashcardContainer">
+            <!-- Flashcards will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="stats">
+            <p>Total Flashcards: <span class="counter" id="totalCards">0</span> | 
+            Currently Viewing: <span class="counter" id="visibleCards">0</span></p>
+            <p><em>Click any card to flip it. Use topic buttons above to filter.</em></p>
+        </div>
+    </div>
+
+    <script>
+        // Flashcards Data
+        const flashcards = [
+            // Topic 1: Cell Structure
+            { term: "Cell", definition: "The basic unit of life.", topic: "1" },
+            { term: "Organelle", definition: "A structure within a cell that carries out a specific function.", topic: "1" },
+            { term: "Ultrastructure", definition: "The detailed structure of a cell as seen under high magnification.", topic: "1" },
+            { term: "Nucleus", definition: "A membrane-bound organelle containing DNA; controls cell activities.", topic: "1" },
+            { term: "Cytoplasm", definition: "The site of chemical reactions in a cell.", topic: "1" },
+            { term: "Cell membrane", definition: "A selectively permeable membrane that controls entry and exit of molecules.", topic: "1" },
+            { term: "Ribosome", definition: "The site of protein synthesis.", topic: "1" },
+            { term: "Mitochondrion", definition: "The site of ATP production by aerobic respiration.", topic: "1" },
+            { term: "Chloroplast", definition: "The site of sugar production by photosynthesis.", topic: "1" },
+            { term: "Vacuole", definition: "Stores water, sugar, and salts in a solution called cell sap.", topic: "1" },
+            { term: "Cell wall", definition: "A layer surrounding some cells; provides support and rigidity.", topic: "1" },
+            { term: "Plasmid", definition: "A small ring of DNA in bacteria containing extra beneficial genes.", topic: "1" },
+            { term: "Endosymbiotic theory", definition: "Theory that mitochondria and chloroplasts evolved from free-living bacteria.", topic: "1" },
+            
+            // Topic 2: Transport Across Cell Membranes
+            { term: "Selectively permeable", definition: "Allows only certain substances to pass through.", topic: "2" },
+            { term: "Phospholipid bilayer", definition: "The double layer of phospholipids forming the cell membrane.", topic: "2" },
+            { term: "Diffusion", definition: "Movement of molecules from higher to lower concentration down a concentration gradient.", topic: "2" },
+            { term: "Concentration gradient", definition: "Difference in concentration between two areas.", topic: "2" },
+            { term: "Passive transport", definition: "Movement that does not require energy.", topic: "2" },
+            { term: "Osmosis", definition: "Movement of water from higher to lower water concentration through a selectively permeable membrane.", topic: "2" },
+            { term: "Turgid", definition: "A plant cell swollen with water; vacuole full, cell membrane pressed against wall.", topic: "2" },
+            { term: "Plasmolysed", definition: "A plant cell that has lost water; vacuole shrinks, membrane pulls away from wall.", topic: "2" },
+            { term: "Active transport", definition: "Movement of molecules against a concentration gradient; requires energy.", topic: "2" },
+            
+            // Topic 3: DNA and Protein Production
+            { term: "DNA", definition: "A molecule that carries genetic information; double-stranded helix.", topic: "3" },
+            { term: "Base pairing rule", definition: "Adenine (A) pairs with Thymine (T), Cytosine (C) pairs with Guanine (G).", topic: "3" },
+            { term: "Gene", definition: "A section of DNA that codes for a protein.", topic: "3" },
+            { term: "Messenger RNA (mRNA)", definition: "Carries a copy of the genetic code from DNA in the nucleus to the ribosome.", topic: "3" },
+            
+            // Topic 4: Proteins and Enzymes
+            { term: "Protein", definition: "A molecule made of amino acids; folds into a 3D shape to perform functions.", topic: "4" },
+            { term: "Structural protein", definition: "Provides support to cells/organisms.", topic: "4" },
+            { term: "Enzyme", definition: "A biological catalyst; speeds up reactions without being used up.", topic: "4" },
+            { term: "Active site", definition: "The region on an enzyme where the substrate binds.", topic: "4" },
+            { term: "Substrate", definition: "The molecule an enzyme acts on.", topic: "4" },
+            { term: "Degradation reaction", definition: "A reaction that breaks down molecules (e.g., starch → maltose).", topic: "4" },
+            { term: "Synthesis reaction", definition: "A reaction that builds up molecules (e.g., glucose-1-phosphate → starch).", topic: "4" },
+            { term: "Optimum conditions", definition: "The temperature and pH at which an enzyme works best.", topic: "4" },
+            { term: "Denatured", definition: "When an enzyme's shape is permanently changed, so it no longer functions.", topic: "4" },
+            
+            // Topic 5: Genetic Engineering
+            { term: "Genetic engineering", definition: "The transfer of genetic information from one cell to another.", topic: "5" },
+            { term: "Genetically modified organism (GMO)", definition: "An organism that has had genes transferred into it.", topic: "5" },
+            { term: "Plasmid", definition: "A small ring of DNA in bacteria used in genetic engineering.", topic: "5" },
+            { term: "Stages of genetic engineering", definition: "Identify gene → extract gene → cut plasmid → insert gene → insert plasmid into host → grow GM cells.", topic: "5" },
+            
+            // Topic 6: Respiration
+            { term: "Respiration", definition: "A series of enzyme-controlled reactions that release energy from glucose.", topic: "6" },
+            { term: "ATP (adenosine triphosphate)", definition: "A molecule that transfers energy within cells.", topic: "6" },
+            { term: "Aerobic respiration", definition: "Respiration using oxygen; produces CO₂, H₂O, and many ATP.", topic: "6" },
+            { term: "Fermentation", definition: "Respiration without oxygen; produces lactate (animals) or ethanol + CO₂ (plants/yeast) and only 2 ATP.", topic: "6" },
+            { term: "Pyruvate", definition: "The molecule produced in the first stage of respiration.", topic: "6" },
+            
+            // Glossary
+            { term: "Aerobic", definition: "Requires oxygen.", topic: "glossary" },
+            { term: "Bilayer", definition: "A structure composed of two layers.", topic: "glossary" },
+            { term: "Catalyst", definition: "A substance that speeds up a reaction without being used up.", topic: "glossary" },
+            { term: "Cellulose", definition: "A carbohydrate that makes up plant cell walls.", topic: "glossary" },
+            { term: "Complementary", definition: "Matching in shape/structure.", topic: "glossary" },
+            { term: "Pharmaceutical", definition: "Relating to medicinal drugs.", topic: "glossary" },
+            { term: "Phospholipid", definition: "A lipid found in the cell membrane.", topic: "glossary" },
+            { term: "Soluble", definition: "Able to be dissolved.", topic: "glossary" }
+        ];
+
+        // Topic names for display
+        const topicNames = {
+            "1": "Cell Structure",
+            "2": "Transport",
+            "3": "DNA & Proteins",
+            "4": "Enzymes",
+            "5": "Genetic Engineering",
+            "6": "Respiration",
+            "glossary": "Glossary"
+        };
+
+        // Topic colors
+        const topicColors = {
+            "1": "#667eea",
+            "2": "#4CAF50",
+            "3": "#FF9800",
+            "4": "#E91E63",
+            "5": "#9C27B0",
+            "6": "#009688",
+            "glossary": "#795548"
+        };
+
+        let currentFilter = "all";
+
+        // Initialize flashcards
+        function initFlashcards() {
+            const container = document.getElementById('flashcardContainer');
+            container.innerHTML = '';
+            
+            // Filter flashcards
+            const filtered = currentFilter === "all" 
+                ? flashcards 
+                : flashcards.filter(card => card.topic === currentFilter);
+            
+            // Create flashcards
+            filtered.forEach((card, index) => {
+                const flashcard = document.createElement('div');
+                flashcard.className = `flashcard`;
+                flashcard.dataset.topic = card.topic;
+                
+                flashcard.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
+                            <div class="term">${card.term}</div>
+                            <div class="hint">Click to flip for definition</div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
+                            <div class="definition">${card.definition}</div>
+                            <div class="hint">Click to flip back</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click event to flip card
+                flashcard.addEventListener('click', () => {
+                    flashcard.classList.toggle('flipped');
+                });
+                
+                container.appendChild(flashcard);
+            });
+            
+            // Update stats
+            document.getElementById('totalCards').textContent = flashcards.length;
+            document.getElementById('visibleCards').textContent = filtered.length;
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.topic-filter').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                document.querySelectorAll('.topic-filter').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                // Update filter and refresh
+                currentFilter = button.dataset.topic;
+                initFlashcards();
+            });
+        });
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initFlashcards);
+    </script>
+</body>
+</html>
