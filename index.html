@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National 5 Biology - Home</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Segoe UI, Tahoma, sans-serif;
+background:linear-gradient(135deg,#667eea,#764ba2);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+width:100%;
+text-align:center;
+}
+
+header{
+background:rgba(0,0,0,.2);
+color:white;
+padding:40px 20px;
+border-radius:20px;
+margin-bottom:50px;
+backdrop-filter:blur(10px);
+}
+
+h1{
+font-size:3rem;
+margin-bottom:15px;
+text-shadow:2px 2px 4px rgba(0,0,0,.3);
+}
+
+.subtitle{
+font-size:1.2rem;
+opacity:.9;
+}
+
+.button-container{
+display:flex;
+gap:30px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.topic-card{
+background:white;
+border-radius:20px;
+padding:40px 30px;
+width:350px;
+text-decoration:none;
+color:#333;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+transition:transform .3s, box-shadow .3s;
+position:relative;
+overflow:hidden;
+}
+
+.topic-card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.topic-card::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:8px;
+}
+
+.cell-biology::before{
+background:linear-gradient(90deg,#2ecc71,#27ae60);
+}
+
+.life-on-earth::before{
+background:linear-gradient(90deg,#3498db,#2980b9);
+}
+
+.icon{
+font-size:4rem;
+margin-bottom:20px;
+}
+
+.cell-biology .icon{
+color:#2ecc71;
+}
+
+.life-on-earth .icon{
+color:#3498db;
+}
+
+.topic-title{
+font-size:1.8rem;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.topic-description{
+font-size:1rem;
+color:#666;
+line-height:1.5;
+}
+
+.card-count{
+display:inline-block;
+margin-top:15px;
+padding:8px 16px;
+background:rgba(0,0,0,.05);
+border-radius:20px;
+font-size:.9rem;
+font-weight:600;
+}
+
+@media (max-width:768px){
+h1{font-size:2.2rem}
+.button-container{gap:20px}
+.topic-card{width:100%;max-width:350px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+<h1>🧬 National 5 Biology</h1>
+<p class="subtitle">Interactive Flashcards for Exam Success</p>
+</header>
+
+<div class="button-container">
+
+<a href="cellbiology.html" class="topic-card cell-biology">
+<div class="icon">🔬</div>
+<div class="topic-title">Cell Biology</div>
+<div class="topic-description">
+Master key concepts in ecosystems, distribution, photosynthesis, energy flow, food production, and evolution
+</div>
+<div class="card-count">39 Flashcards</div>
+</a>
+
+<a href="lifeonearth.html" class="topic-card life-on-earth">
+<div class="icon">🌍</div>
+<div class="topic-title">Life on Earth</div>
+<div class="topic-description">
+Explore biodiversity, natural selection, speciation, and the intricate web of life on our planet
+</div>
+<div class="card-count">37 Flashcards</div>
+</a>
+
+</div>
+
+</div>
+</body>
+</html>
+```
