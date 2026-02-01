@@ -1,0 +1,274 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National 5 Biology – Flashcards</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Segoe UI, Tahoma, sans-serif;
+background:linear-gradient(135deg,#667eea,#764ba2);
+min-height:100vh;
+padding:20px;
+}
+
+.container{max-width:1300px;margin:auto}
+
+header{
+background:rgba(0,0,0,.2);
+color:white;
+padding:20px;
+border-radius:15px;
+text-align:center;
+margin-bottom:20px;
+}
+
+h1{font-size:2.4rem}
+.subtitle{opacity:.9}
+
+/* CONTROLS */
+.controls{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.control-btn{
+padding:10px 18px;
+border:none;
+border-radius:25px;
+font-weight:600;
+cursor:pointer;
+background:white;
+}
+
+.control-btn.active{
+background:#4CAF50;
+color:white;
+}
+
+/* FLASHCARDS */
+.flashcard-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+gap:20px;
+}
+
+.flashcard{
+height:210px;
+perspective:1000px;
+cursor:pointer;
+}
+
+.flashcard-inner{
+width:100%;
+height:100%;
+transition:transform .6s;
+transform-style:preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner{
+transform:rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:15px;
+padding:20px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.flashcard-front{
+background:white;
+color:#333;
+}
+
+.flashcard-back{
+transform:rotateY(180deg);
+background:linear-gradient(135deg,#f093fb,#f5576c);
+color:white;
+}
+
+.term{
+font-size:1.4rem;
+font-weight:bold;
+text-align:center;
+}
+
+.definition{
+text-align:center;
+line-height:1.4;
+}
+
+.topic-tag{
+position:absolute;
+top:12px;
+right:12px;
+padding:5px 10px;
+border-radius:12px;
+font-size:.75rem;
+color:white;
+}
+
+/* TOPIC COLOURS */
+.topic-1{background:#2ecc71}
+.topic-2{background:#1abc9c}
+.topic-3{background:#f1c40f;color:#333}
+.topic-4{background:#e67e22}
+.topic-5{background:#27ae60}
+.topic-6{background:#8e44ad}
+.topic-glossary{background:#795548}
+
+.hint{
+position:absolute;
+bottom:10px;
+font-size:.75rem;
+opacity:.7;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+<h1>National 5 Biology Flashcards</h1>
+<p class="subtitle">Life on Earth definitions • Click cards to flip</p>
+</header>
+
+<div class="controls">
+<button class="control-btn active" data-topic="all">All Topics</button>
+<button class="control-btn" data-topic="1">Ecosystems</button>
+<button class="control-btn" data-topic="2">Distribution</button>
+<button class="control-btn" data-topic="3">Photosynthesis</button>
+<button class="control-btn" data-topic="4">Energy</button>
+<button class="control-btn" data-topic="5">Food Production</button>
+<button class="control-btn" data-topic="6">Evolution</button>
+<button class="control-btn" data-topic="glossary">Glossary</button>
+</div>
+
+<div class="flashcard-grid" id="flashcardContainer"></div>
+
+<script>
+const topicNames={
+"1":"Ecosystems",
+"2":"Distribution of Organisms",
+"3":"Photosynthesis",
+"4":"Energy in Ecosystems",
+"5":"Food Production",
+"6":"Evolution of Species",
+"glossary":"Glossary"
+};
+
+const flashcards=[
+
+// TOPIC 1 – ECOSYSTEMS
+{term:"Species",definition:"A group of organisms which can interbreed and produce fertile offspring.",topic:"1"},
+{term:"Biodiversity",definition:"The range of species within an ecosystem.",topic:"1"},
+{term:"Population",definition:"A group of organisms of the same species.",topic:"1"},
+{term:"Producer",definition:"An organism which produces its own food.",topic:"1"},
+{term:"Consumer",definition:"An organism which consumes other organisms for food.",topic:"1"},
+{term:"Herbivore",definition:"An organism which only consumes plant matter.",topic:"1"},
+{term:"Carnivore",definition:"An organism which only consumes animal matter.",topic:"1"},
+{term:"Omnivore",definition:"An organism which consumes both plant and animal matter.",topic:"1"},
+{term:"Predator",definition:"An animal which hunts other animals (prey) for food.",topic:"1"},
+{term:"Prey",definition:"An organism which is hunted and killed by a predator.",topic:"1"},
+{term:"Food chain",definition:"A diagram which shows a simple feeding relationship between organisms.",topic:"1"},
+{term:"Food web",definition:"A diagram which shows the interconnection of food chains.",topic:"1"},
+{term:"Ecosystem",definition:"Consists of all the organisms (the community) living in a particular habitat and the non-living components with which the organisms interact.",topic:"1"},
+{term:"Niche",definition:"The role that an organism plays within a community.",topic:"1"},
+{term:"Competition",definition:"Occurs when the resources organisms require are in short supply.",topic:"1"},
+{term:"Interspecific competition",definition:"Occurs amongst individuals of different species for one or a few of the resources they require.",topic:"1"},
+{term:"Intraspecific competition",definition:"Occurs amongst individuals of the same species and is for all resources required.",topic:"1"},
+
+// TOPIC 2 – DISTRIBUTION
+{term:"Abiotic factors",definition:"Non-living factors (e.g., light, moisture, pH, temperature).",topic:"2"},
+{term:"Biotic factors",definition:"Living factors (e.g., competition, disease, grazing, predation).",topic:"2"},
+{term:"Indicator species",definition:"Species that by their presence or absence indicate environmental quality or levels of pollution.",topic:"2"},
+
+// TOPIC 3 – PHOTOSYNTHESIS
+{term:"Photosynthesis",definition:"A two-stage process that converts light energy into chemical energy. Word summary: light energy + carbon dioxide + water → sugar + oxygen",topic:"3"},
+{term:"Limiting factor",definition:"Any factor which limits the rate of photosynthesis when it is in short supply (carbon dioxide, light intensity, temperature).",topic:"3"},
+
+// TOPIC 4 – ENERGY
+{term:"Pyramid of numbers",definition:"Shows the number of organisms at each level of a food chain.",topic:"4"},
+{term:"Pyramid of energy",definition:"Shows the total quantity of energy stored in the biomass of organisms at each level of a food chain.",topic:"4"},
+
+// TOPIC 5 – FOOD PRODUCTION
+{term:"Fertilisers",definition:"Provide chemicals such as nitrates which increase crop yield.",topic:"5"},
+{term:"Pesticides",definition:"Chemicals that kill plants and animals which reduce crop yield (e.g., herbicides, insecticides).",topic:"5"},
+{term:"Bioaccumulation",definition:"The build-up of toxic substances in the bodies of living organisms over time.",topic:"5"},
+{term:"Biological control",definition:"Controlling pest numbers by introducing a natural predator.",topic:"5"},
+{term:"Algal bloom",definition:"The overgrowth of algae in water systems.",topic:"5"},
+
+// TOPIC 6 – EVOLUTION
+{term:"Mutation",definition:"A random change to the genetic material of an organism.",topic:"6"},
+{term:"Mutagen",definition:"Anything which can increase the rate of mutation (e.g., radiation, certain chemicals).",topic:"6"},
+{term:"Adaptation",definition:"An inherited characteristic that makes an organism well suited to survival in its environment/niche.",topic:"6"},
+{term:"Natural selection",definition:"The process where the best adapted individuals in a population survive to reproduce, passing on favourable alleles.",topic:"6"},
+{term:"Selection pressures",definition:"Any factors which can affect the survival or reproduction of an organism (e.g., food availability, predation, climate).",topic:"6"},
+{term:"Speciation",definition:"The formation of new species in the course of evolution.",topic:"6"},
+{term:"Isolation barrier",definition:"A barrier that separates parts of a population, allowing them to evolve separately (can be geographical, ecological, or behavioural).",topic:"6"},
+
+// GLOSSARY
+{term:"Biomass",definition:"The total quantity of organisms in a given area.",topic:"glossary"},
+{term:"Parasitoid",definition:"An insect whose larvae live as parasites inside a host, eventually killing it.",topic:"glossary"}
+];
+
+const container=document.getElementById("flashcardContainer");
+let currentFilter="all";
+
+function renderCards(){
+container.innerHTML="";
+flashcards
+.filter(c=>currentFilter==="all"||c.topic===currentFilter)
+.forEach(card=>{
+const el=document.createElement("div");
+el.className="flashcard";
+el.innerHTML=`
+<div class="flashcard-inner">
+<div class="flashcard-front">
+<div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
+<div class="term">${card.term}</div>
+<div class="hint">Click to flip</div>
+</div>
+<div class="flashcard-back">
+<div class="topic-tag topic-${card.topic}">${topicNames[card.topic]}</div>
+<div class="definition">${card.definition}</div>
+<div class="hint">Click to flip back</div>
+</div>
+</div>`;
+el.onclick=()=>el.classList.toggle("flipped");
+container.appendChild(el);
+});
+}
+
+document.querySelectorAll(".control-btn").forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll(".control-btn").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+currentFilter=btn.dataset.topic;
+renderCards();
+};
+});
+
+renderCards();
+</script>
+
+</div>
+</body>
+</html>
+```
