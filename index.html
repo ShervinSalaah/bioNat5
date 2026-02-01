@@ -455,6 +455,13 @@
         .topic-4 { background: #E91E63; } /* Proteins */
         .topic-5 { background: #9C27B0; } /* Genetic Engineering */
         .topic-6 { background: #009688; } /* Respiration */
+        .topic-7 { background: #2ecc71; }   /* Ecosystems */
+.topic-8 { background: #1abc9c; }   /* Distribution */
+.topic-9 { background: #f1c40f; }   /* Photosynthesis */
+.topic-10 { background: #e67e22; }  /* Energy */
+.topic-11 { background: #27ae60; }  /* Food Production */
+.topic-12 { background: #8e44ad; }  /* Evolution */
+
         .topic-glossary { background: #795548; } /* Glossary */
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -463,7 +470,7 @@
     <div class="container">
         <header>
             <h1>National 5 Biology Flashcards <span id="modeIndicator" class="mode-indicator" style="display: none;">Quiz Mode</span></h1>
-            <p class="subtitle" id="subtitle">Cell Biology Unit - Click cards to flip | Use buttons to filter or flip all</p>
+            <p class="subtitle" id="subtitle">Click cards to flip | Use buttons to filter or flip all</p>
         </header>
         
         <div class="quiz-container" id="quizContainer">
@@ -507,6 +514,26 @@
                 <button class="control-btn topic-filter" data-topic="glossary">
                     <i class="fas fa-book"></i> Glossary
                 </button>
+                <button class="control-btn topic-filter" data-topic="7">
+    <i class="fas fa-leaf"></i> Ecosystems
+</button>
+<button class="control-btn topic-filter" data-topic="8">
+    <i class="fas fa-map"></i> Distribution
+</button>
+<button class="control-btn topic-filter" data-topic="9">
+    <i class="fas fa-sun"></i> Photosynthesis
+</button>
+<button class="control-btn topic-filter" data-topic="10">
+    <i class="fas fa-chart-pyramid"></i> Energy
+</button>
+<button class="control-btn topic-filter" data-topic="11">
+    <i class="fas fa-tractor"></i> Food Prod.
+</button>
+<button class="control-btn topic-filter" data-topic="12">
+    <i class="fas fa-dna"></i> Evolution
+</button>
+
+
             </div>
             
             <div class="action-controls">
@@ -607,7 +634,55 @@
             { term: "Aerobic respiration", definition: "Respiration using oxygen; produces CO₂, H₂O, and many ATP.", topic: "6" },
             { term: "Fermentation", definition: "Respiration without oxygen; produces lactate (animals) or ethanol + CO₂ (plants/yeast) and only 2 ATP.", topic: "6" },
             { term: "Pyruvate", definition: "The molecule produced in the first stage of respiration.", topic: "6" },
-            
+
+            // Topic 7: Ecosystems
+{ term:"Species", definition:"A group of organisms which can interbreed and produce fertile offspring.", topic:"7" },
+{ term:"Biodiversity", definition:"The range of species within an ecosystem.", topic:"7" },
+{ term:"Population", definition:"A group of organisms of the same species.", topic:"7" },
+{ term:"Producer", definition:"An organism which produces its own food.", topic:"7" },
+{ term:"Consumer", definition:"An organism which consumes other organisms for food.", topic:"7" },
+{ term:"Herbivore", definition:"An organism which only consumes plant matter.", topic:"7" },
+{ term:"Carnivore", definition:"An organism which only consumes animal matter.", topic:"7" },
+{ term:"Omnivore", definition:"An organism which consumes both plant and animal matter.", topic:"7" },
+{ term:"Predator", definition:"An animal which hunts other animals (prey) for food.", topic:"7" },
+{ term:"Prey", definition:"An organism which is hunted and killed by a predator.", topic:"7" },
+{ term:"Food chain", definition:"A diagram which shows a simple feeding relationship between organisms.", topic:"7" },
+{ term:"Food web", definition:"A diagram which shows the interconnection of food chains.", topic:"7" },
+{ term:"Ecosystem", definition:"All organisms in a habitat and the non-living components they interact with.", topic:"7" },
+{ term:"Niche", definition:"The role an organism plays within a community.", topic:"7" },
+{ term:"Competition", definition:"Occurs when resources are in short supply.", topic:"7" },
+{ term:"Interspecific competition", definition:"Competition between individuals of different species.", topic:"7" },
+{ term:"Intraspecific competition", definition:"Competition between individuals of the same species.", topic:"7" },
+
+// Topic 8: Distribution of Organisms
+{ term:"Abiotic factors", definition:"Non-living factors such as light, moisture, pH, and temperature.", topic:"8" },
+{ term:"Biotic factors", definition:"Living factors such as competition, disease, grazing, and predation.", topic:"8" },
+{ term:"Indicator species", definition:"Species whose presence or absence indicates environmental quality.", topic:"8" },
+
+// Topic 9: Photosynthesis
+{ term:"Photosynthesis", definition:"A two-stage process converting light energy into chemical energy.", topic:"9" },
+{ term:"Limiting factor", definition:"A factor that limits the rate of photosynthesis when in short supply.", topic:"9" },
+
+// Topic 10: Energy in Ecosystems
+{ term:"Pyramid of numbers", definition:"Shows the number of organisms at each level of a food chain.", topic:"10" },
+{ term:"Pyramid of energy", definition:"Shows the energy stored in biomass at each trophic level.", topic:"10" },
+
+// Topic 11: Food Production
+{ term:"Fertilisers", definition:"Provide chemicals such as nitrates which increase crop yield.", topic:"11" },
+{ term:"Pesticides", definition:"Chemicals that kill organisms which reduce crop yield.", topic:"11" },
+{ term:"Bioaccumulation", definition:"The build-up of toxic substances in organisms over time.", topic:"11" },
+{ term:"Biological control", definition:"Using natural predators to control pests.", topic:"11" },
+{ term:"Algal bloom", definition:"The overgrowth of algae in water systems.", topic:"11" },
+
+// Topic 12: Evolution of Species
+{ term:"Mutation", definition:"A random change to genetic material.", topic:"12" },
+{ term:"Mutagen", definition:"Something that increases the rate of mutation.", topic:"12" },
+{ term:"Adaptation", definition:"An inherited feature that improves survival.", topic:"12" },
+{ term:"Natural selection", definition:"Best adapted individuals survive and reproduce.", topic:"12" },
+{ term:"Selection pressure", definition:"A factor affecting survival or reproduction.", topic:"12" },
+{ term:"Speciation", definition:"The formation of new species.", topic:"12" },
+{ term:"Isolation barrier", definition:"A barrier separating populations allowing separate evolution.", topic:"12" }
+
             // Glossary
             { term: "Aerobic", definition: "Requires oxygen.", topic: "glossary" },
             { term: "Bilayer", definition: "A structure composed of two layers.", topic: "glossary" },
@@ -621,14 +696,21 @@
 
         // Topic names for display
         const topicNames = {
-            "1": "Cell Structure",
-            "2": "Transport",
-            "3": "DNA & Proteins",
-            "4": "Enzymes",
-            "5": "Genetic Engineering",
-            "6": "Respiration",
-            "glossary": "Glossary"
-        };
+    "1": "Cell Structure",
+    "2": "Transport",
+    "3": "DNA & Proteins",
+    "4": "Enzymes",
+    "5": "Genetic Engineering",
+    "6": "Respiration",
+    "7": "Ecosystems",
+    "8": "Distribution",
+    "9": "Photosynthesis",
+    "10": "Energy",
+    "11": "Food Production",
+    "12": "Evolution",
+    "glossary": "Glossary"
+};
+
 
         // Topic colors
         const topicColors = {
